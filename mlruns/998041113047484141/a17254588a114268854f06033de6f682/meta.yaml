@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/siddhant/housepriceproject/mlruns/998041113047484141/a17254588a114268854f06033de6f682/artifacts
+end_time: 1708846377707
+entry_point_name: ''
+experiment_id: '998041113047484141'
+lifecycle_stage: active
+run_id: a17254588a114268854f06033de6f682
+run_name: suave-conch-642
+run_uuid: a17254588a114268854f06033de6f682
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1708846322486
+status: 3
+tags: []
+user_id: siddhant

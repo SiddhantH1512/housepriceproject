@@ -1,0 +1,16 @@
+artifact_uri: file:///Users/siddhant/housepriceproject/mlruns/998041113047484141/04246857dd7249beaf9065a6903cc0c8/artifacts
+deleted_time: 1708847434945
+end_time: 1708846793501
+entry_point_name: ''
+experiment_id: '998041113047484141'
+lifecycle_stage: deleted
+run_id: 04246857dd7249beaf9065a6903cc0c8
+run_name: bemused-rook-779
+run_uuid: 04246857dd7249beaf9065a6903cc0c8
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1708846793463
+status: 4
+tags: []
+user_id: siddhant

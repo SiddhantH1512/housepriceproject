@@ -1,0 +1,16 @@
+artifact_uri: file:///Users/siddhant/housepriceproject/mlruns/998041113047484141/82ac3d6be0fd4228acc06aa91b8aa17a/artifacts
+deleted_time: 1708848551134
+end_time: 1708847965635
+entry_point_name: ''
+experiment_id: '998041113047484141'
+lifecycle_stage: deleted
+run_id: 82ac3d6be0fd4228acc06aa91b8aa17a
+run_name: kindly-perch-698
+run_uuid: 82ac3d6be0fd4228acc06aa91b8aa17a
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1708847931362
+status: 4
+tags: []
+user_id: siddhant

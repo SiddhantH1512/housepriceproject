@@ -1,0 +1,16 @@
+artifact_uri: file:///Users/siddhant/housepriceproject/mlruns/998041113047484141/10d1fd4c989a4432b8b6b1aed502a00d/artifacts
+deleted_time: 1708848551134
+end_time: 1708847056311
+entry_point_name: ''
+experiment_id: '998041113047484141'
+lifecycle_stage: deleted
+run_id: 10d1fd4c989a4432b8b6b1aed502a00d
+run_name: receptive-fish-875
+run_uuid: 10d1fd4c989a4432b8b6b1aed502a00d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1708847006873
+status: 4
+tags: []
+user_id: siddhant
