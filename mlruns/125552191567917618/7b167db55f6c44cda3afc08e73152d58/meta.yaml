@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/siddhant/housepriceproject/mlruns/125552191567917618/7b167db55f6c44cda3afc08e73152d58/artifacts
+end_time: 1708893475152
+entry_point_name: ''
+experiment_id: '125552191567917618'
+lifecycle_stage: active
+run_id: 7b167db55f6c44cda3afc08e73152d58
+run_name: bittersweet-foal-785
+run_uuid: 7b167db55f6c44cda3afc08e73152d58
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1708892529570
+status: 3
+tags: []
+user_id: siddhant

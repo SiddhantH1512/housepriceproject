@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/siddhant/housepriceproject/mlruns/125552191567917618/1a8d0aa872e9424aaacf3033ea8c9437/artifacts
+end_time: 1708891474950
+entry_point_name: ''
+experiment_id: '125552191567917618'
+lifecycle_stage: active
+run_id: 1a8d0aa872e9424aaacf3033ea8c9437
+run_name: agreeable-midge-858
+run_uuid: 1a8d0aa872e9424aaacf3033ea8c9437
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1708891474888
+status: 4
+tags: []
+user_id: siddhant

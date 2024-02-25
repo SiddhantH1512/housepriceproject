@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/siddhant/housepriceproject/mlruns/125552191567917618/28698fb19601473b8c8c5c619cd773ae/artifacts
+end_time: 1708897851199
+entry_point_name: ''
+experiment_id: '125552191567917618'
+lifecycle_stage: active
+run_id: 28698fb19601473b8c8c5c619cd773ae
+run_name: gentle-lark-772
+run_uuid: 28698fb19601473b8c8c5c619cd773ae
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1708894239555
+status: 3
+tags: []
+user_id: siddhant

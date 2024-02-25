@@ -1,0 +1,16 @@
+artifact_uri: file:///Users/siddhant/housepriceproject/mlruns/125552191567917618/60b607b078dd41c691db433b9e652837/artifacts
+deleted_time: 1708898087510
+end_time: 1708893557495
+entry_point_name: ''
+experiment_id: '125552191567917618'
+lifecycle_stage: deleted
+run_id: 60b607b078dd41c691db433b9e652837
+run_name: charming-horse-170
+run_uuid: 60b607b078dd41c691db433b9e652837
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1708893557425
+status: 4
+tags: []
+user_id: siddhant

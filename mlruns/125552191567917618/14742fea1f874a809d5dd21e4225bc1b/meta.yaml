@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/siddhant/housepriceproject/mlruns/125552191567917618/14742fea1f874a809d5dd21e4225bc1b/artifacts
+end_time: 1708892322858
+entry_point_name: ''
+experiment_id: '125552191567917618'
+lifecycle_stage: active
+run_id: 14742fea1f874a809d5dd21e4225bc1b
+run_name: entertaining-cub-180
+run_uuid: 14742fea1f874a809d5dd21e4225bc1b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1708891803048
+status: 3
+tags: []
+user_id: siddhant

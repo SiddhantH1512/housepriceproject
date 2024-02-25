@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/siddhant/housepriceproject/mlruns/125552191567917618/df31e1cf4cad49499c1ff84d8499fbf6/artifacts
+end_time: 1708891120384
+entry_point_name: ''
+experiment_id: '125552191567917618'
+lifecycle_stage: active
+run_id: df31e1cf4cad49499c1ff84d8499fbf6
+run_name: smiling-lamb-274
+run_uuid: df31e1cf4cad49499c1ff84d8499fbf6
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1708891120331
+status: 4
+tags: []
+user_id: siddhant

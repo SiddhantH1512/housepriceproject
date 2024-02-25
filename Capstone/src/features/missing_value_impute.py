@@ -202,7 +202,7 @@ class MissingValueImpute:
     
     def few_cleanups(self):
         logging.info("Deleting unnecessary columns")
-        self.df.drop(columns=["society", "price_per_sqft"], inplace=True)
+        self.df.drop(columns=["society", "price_per_sqft", "others"], inplace=True)
         logging.info("Columns deleted")
     
     @staticmethod

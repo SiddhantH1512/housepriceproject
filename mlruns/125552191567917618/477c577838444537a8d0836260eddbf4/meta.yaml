@@ -1,0 +1,16 @@
+artifact_uri: file:///Users/siddhant/housepriceproject/mlruns/125552191567917618/477c577838444537a8d0836260eddbf4/artifacts
+deleted_time: 1708898087510
+end_time: 1708894153595
+entry_point_name: ''
+experiment_id: '125552191567917618'
+lifecycle_stage: deleted
+run_id: 477c577838444537a8d0836260eddbf4
+run_name: dashing-dog-645
+run_uuid: 477c577838444537a8d0836260eddbf4
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1708893615744
+status: 4
+tags: []
+user_id: siddhant
