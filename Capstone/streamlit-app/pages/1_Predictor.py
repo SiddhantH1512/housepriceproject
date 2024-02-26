@@ -2,19 +2,30 @@ import streamlit as st
 import pandas as pd 
 import numpy as np 
 import pickle
+import boto3
+import os
+
+def download_file_from_s3(bucket_name, s3_key, local_path):
+    if not os.path.exists(local_path):
+        s3 = boto3.client('s3')
+        s3.download_file(bucket_name, s3_key, local_path)
+
+model_path = '/app/models/pipeline.pkl'
+df_path = '/app/models/df.pkl'
 
 
+download_file_from_s3('capstone-houseprice-prediction', 'models/pipeline.pkl', model_path)
+download_file_from_s3('capstone-houseprice-prediction', 'models/df.pkl', df_path)
 
+
+with open(model_path, 'rb') as file:
+    pipeline = pickle.load(file) 
+
+with open(df_path, 'rb') as file:
+    df = pickle.load(file) 
 
 st.title("Page 1")
 
-with open("/Users/siddhant/housepriceproject/Capstone/df.pkl", 'rb') as file:
-    df = pickle.load(file) 
-    
-with open("/Users/siddhant/housepriceproject/Capstone/pipeline.pkl", 'rb') as file:
-    pipeline = pickle.load(file)
-
-st.dataframe(df)
 
 st.header("Enter your input")
 

@@ -5,3 +5,8 @@ seaborn
 matplotlib
 dvclive
 mlops
+mlflow
+xgboost
+streamlit
+pickle
+boto3
