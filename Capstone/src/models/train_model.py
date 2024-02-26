@@ -113,7 +113,7 @@ if __name__ == "__main__":
         mlflow.set_experiment("Final Model")
 
         with mlflow.start_run():
-            datapath = "/Users/siddhant/housepriceproject/Capstone/data/ready/missing_imputed.csv"
+            datapath = "/Users/siddhant/housepriceproject/Capstone/pipeline_generated_data/missing_imputed.csv"
             df = pd.read_csv(datapath)
             tuner = HyperParameterTune(df)
 

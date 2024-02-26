@@ -1,13 +1,15 @@
 import sys
-sys.path.append('/Users/siddhant/housepriceproject/Capstone')
+sys.path.append('/Users/siddhant/housepriceproject')
 import pandas as pd 
 import numpy as np 
-from logger import logging
-from exception import CustomException
+from Capstone.logger import logging
+from Capstone.exception import CustomException
 from dataclasses import dataclass
+import warnings
 import os
 import re
 
+warnings.filterwarnings("ignore")
 
 class DataPreprocessing:
     def __init__(self, dataframe):
@@ -72,7 +74,7 @@ class DataPreprocessing:
             self.unwanted_columns_drop()
             self.clean_price()
             self.clean_society()
-            self.rename_clean__col()
+            self.rename_clean_col()
             self.clean_price_per_sqft()
             self.create_feature()
             self.clean_other_columns()
@@ -83,17 +85,20 @@ class DataPreprocessing:
         return self.df
    
    
+def run_preprocessing(input_path, output_path):
+    df = pd.read_csv(input_path)    
+    preprocessor = DataPreprocessing(df)
+    processed_df = preprocessor.combined_run()
+    processed_df.to_csv(output_path, index=False)
+
 if __name__ == "__main__":
-   try:
-       filepath = "/Users/siddhant/housepriceproject/Capstone/data/raw/flats.csv"
-       output_path = "/Users/siddhant/housepriceproject/Capstone/data/ready"
-       df = pd.read_csv(filepath)    
-       preprocessor = DataPreprocessing(df)
-       processed_df = preprocessor.combined_run()
-       processed_df.to_csv(os.path.join(output_path, "flats_processed.csv"), index=False)
-   except Exception as e:
-       logging.info("The following error occured")
-       raise CustomException(e, sys)
+    try:
+        filepath = "/Users/siddhant/housepriceproject/Capstone/data/raw/flats.csv"
+        output_path = "/Users/siddhant/housepriceproject/Capstone/pipeline_generated_data/flats_processed.csv"
+        run_preprocessing(filepath, output_path)
+    except Exception as e:
+        logging.info("The following error occurred")
+        raise CustomException(e, sys)
    
     
 

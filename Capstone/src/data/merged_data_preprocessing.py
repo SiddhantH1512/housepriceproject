@@ -124,13 +124,19 @@ class MergedPreprocessing:
         self.renaming_sector()
         self.drop_cols()
         
+        logging.info("Final run")
         return self.df
-        logging("Final run")
+        
+    def run_preprocessing(input_path, output_path):
+        df = pd.read_csv(input_path)    
+        preprocessor = MergedPreprocessing(df)
+        processed_df = preprocessor.combined_run3()
+        processed_df.to_csv(output_path, index=False)
     
 if __name__ == "__main__":
     try:
-        data_path = "/Users/siddhant/housepriceproject/Capstone/data/ready/merged_data.csv"
-        destination_path = "/Users/siddhant/housepriceproject/Capstone/data/ready"
+        data_path = "/Users/siddhant/housepriceproject/Capstone/pipeline_generated_data/merged_data.csv"
+        destination_path = "/Users/siddhant/housepriceproject/Capstone/pipeline_generated_data"
         output_path = os.path.join(destination_path, "merged_processed.csv")
         df = pd.read_csv(data_path)
         preprocessor3 = MergedPreprocessing(df)

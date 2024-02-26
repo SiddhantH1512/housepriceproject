@@ -1,0 +1,71 @@
+stages:
+  preprocess_flats:
+    cmd: python /Users/siddhant/housepriceproject/Capstone/src/data/data_preprocessing.py
+    deps:
+      - /Users/siddhant/housepriceproject/Capstone/data/raw/flats.csv
+      - /Users/siddhant/housepriceproject/Capstone/src/data/data_preprocessing.py
+    outs:
+      - /Users/siddhant/housepriceproject/Capstone/pipeline_generated_data/flats_processed.csv
+
+  preprocess_houses:
+    cmd: python /Users/siddhant/housepriceproject/Capstone/src/data/data_preprocessing2.py
+    deps:
+      - /Users/siddhant/housepriceproject/Capstone/data/raw/house.csv
+      - /Users/siddhant/housepriceproject/Capstone/src/data/data_preprocessing2.py
+    outs:
+      - /Users/siddhant/housepriceproject/Capstone/pipeline_generated_data/house_processed.csv
+
+  merge_data:
+    cmd: python /Users/siddhant/housepriceproject/Capstone/src/data/merged_preprocessing.py
+    deps:
+      - /Users/siddhant/housepriceproject/Capstone/pipeline_generated_data/flats_processed.csv
+      - /Users/siddhant/housepriceproject/Capstone/pipeline_generated_data/house_processed.csv
+      - /Users/siddhant/housepriceproject/Capstone/src/data/merged_preprocessing.py
+    outs:
+      - /Users/siddhant/housepriceproject/Capstone/pipeline_generated_data/merged_data.csv
+
+  preprocess_merged_data:
+    cmd: python /Users/siddhant/housepriceproject/Capstone/src/data/merged_data_preprocessing.py
+    deps:
+      - /Users/siddhant/housepriceproject/Capstone/pipeline_generated_data/merged_data.csv
+      - /Users/siddhant/housepriceproject/Capstone/src/data/merged_data_preprocessing.py
+    outs:
+      - /Users/siddhant/housepriceproject/Capstone/pipeline_generated_data/merged_processed.csv
+
+  build_features:
+    cmd: python /Users/siddhant/housepriceproject/Capstone/src/features/build_features.py
+    deps:
+      - /Users/siddhant/housepriceproject/Capstone/pipeline_generated_data/merged_processed.csv
+      - /Users/siddhant/housepriceproject/Capstone/src/features/build_features.py
+    outs:
+      - /Users/siddhant/housepriceproject/Capstone/pipeline_generated_data/feature_engineered.csv
+
+  treat_outliers:
+    cmd: python /Users/siddhant/housepriceproject/Capstone/src/features/outliers_treatment.py
+    deps:
+      - /Users/siddhant/housepriceproject/Capstone/pipeline_generated_data/feature_engineered.csv
+      - /Users/siddhant/housepriceproject/Capstone/src/features/outliers_treatment.py
+    outs:
+      - /Users/siddhant/housepriceproject/Capstone/pipeline_generated_data/outliers_treated.csv
+
+  impute_missing_values:
+    cmd: python /Users/siddhant/housepriceproject/Capstone/src/features/missing_value_impute.py
+    deps:
+      - /Users/siddhant/housepriceproject/Capstone/pipeline_generated_data/outliers_treated.csv
+      - /Users/siddhant/housepriceproject/Capstone/src/features/missing_value_impute.py
+    outs:
+      - /Users/siddhant/housepriceproject/Capstone/pipeline_generated_data/missing_imputed.csv
+
+  train_model:
+    cmd: python /Users/siddhant/housepriceproject/Capstone/src/models/train_model.py
+    deps:
+      - /Users/siddhant/housepriceproject/Capstone/pipeline_generated_data/missing_imputed.csv
+      - /Users/siddhant/housepriceproject/Capstone/src/models/train_model.py
+    # No output specified as the model is saved in a fixed location
+
+  push_model_to_s3:
+    cmd: python /Users/siddhant/housepriceproject/Capstone/src/models/push_model.py
+    deps:
+      - /Users/siddhant/housepriceproject/Capstone/pipeline.pkl
+      - /Users/siddhant/housepriceproject/Capstone/src/models/push_model.py
+  # Assuming no specific output for this stage

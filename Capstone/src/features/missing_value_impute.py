@@ -260,10 +260,16 @@ class MissingValueImpute:
     
         return self.df
     
+    def run_preprocessing(input_path, output_path):
+        df = pd.read_csv(input_path)    
+        preprocessor = MissingValueImpute(df)
+        processed_df = preprocessor.combined_run6()
+        processed_df.to_csv(output_path, index=False)
+    
 if __name__ == "__main__":
     try:
-        datapath = "/Users/siddhant/housepriceproject/Capstone/data/ready/outliers_treated.csv"
-        output_path = "/Users/siddhant/housepriceproject/Capstone/data/ready"
+        datapath = "/Users/siddhant/housepriceproject/Capstone/pipeline_generated_data/outliers_treated.csv"
+        output_path = "/Users/siddhant/housepriceproject/Capstone/pipeline_generated_data"
         destination_path = os.path.join(output_path, "missing_imputed.csv")
         
         df = pd.read_csv(datapath)

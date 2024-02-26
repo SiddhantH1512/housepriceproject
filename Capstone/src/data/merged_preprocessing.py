@@ -30,12 +30,18 @@ class MergeFiles:
         
         return self.df
     logging.info("Merged Dataframe")
-    
+
+    def run_preprocessing(input_path, output_path):
+        df = pd.read_csv(input_path)    
+        preprocessor = MergeFiles(df)
+        processed_df = preprocessor.combined_run()
+        processed_df.to_csv(output_path, index=False)
+        
 if __name__ == "__main__":
     try:
-        filepath1 = "/Users/siddhant/housepriceproject/Capstone/data/ready/flats_processed.csv"
-        filepath2 = "/Users/siddhant/housepriceproject/Capstone/data/ready/house_processed.csv"
-        destination_path = "/Users/siddhant/housepriceproject/Capstone/data/ready"
+        filepath1 = "/Users/siddhant/housepriceproject/Capstone/pipeline_generated_data/flats_processed.csv"
+        filepath2 = "/Users/siddhant/housepriceproject/Capstone/pipeline_generated_data/house_processed.csv"
+        destination_path = "/Users/siddhant/housepriceproject/Capstone/pipeline_generated_data"
         filename = "merged_data.csv"
         
         df1 = pd.read_csv(filepath1)

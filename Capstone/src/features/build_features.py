@@ -409,12 +409,18 @@ class FeatureEngineering:
 
         return self.df
 
+    def run_preprocessing(input_path, output_path):
+        df = pd.read_csv(input_path)    
+        preprocessor = FeatureEngineering(df)
+        processed_df = preprocessor.combined_run4()
+        processed_df.to_csv(output_path, index=False)
+    
 
 if __name__ == "__main__":
     try:
-        datapath1 = "/Users/siddhant/housepriceproject/Capstone/data/ready/merged_processed.csv"
+        datapath1 = "/Users/siddhant/housepriceproject/Capstone/pipeline_generated_data/merged_processed.csv"
         datapath2 = "/Users/siddhant/housepriceproject/Capstone/data/raw/appartments.csv"
-        output_path = "/Users/siddhant/housepriceproject/Capstone/data/ready"
+        output_path = "/Users/siddhant/housepriceproject/Capstone/pipeline_generated_data"
         
         df = pd.read_csv(datapath1)
         

@@ -88,15 +88,17 @@ class DataPreprocessing2:
         return self.df1
     logging.info("Final run")
     
+def run_preprocessing(input_path, output_path):
+    df = pd.read_csv(input_path)    
+    preprocessor = DataPreprocessing2(df)
+    processed_df = preprocessor.combined_run()
+    processed_df.to_csv(output_path, index=False)
+
 if __name__ == "__main__":
     try:
-        data_path = "/Users/siddhant/housepriceproject/Capstone/data/raw/house.csv"
-        destination_path = "/Users/siddhant/housepriceproject/Capstone/data/ready"
-        output_path = os.path.join(destination_path, "house_processed.csv")
-        df1 = pd.read_csv(data_path)
-        preprocessor2 = DataPreprocessing2(df1)
-        preprocessed2_df = preprocessor2.combined_run()
-        preprocessed2_df.to_csv(output_path, index=False)
+        filepath = "/Users/siddhant/housepriceproject/Capstone/data/raw/house.csv"
+        output_path = "/Users/siddhant/housepriceproject/Capstone/pipeline_generated_data/house_processed.csv"
+        run_preprocessing(filepath, output_path)
     except Exception as e:
-        logging.info("Error occured:")
+        logging.info("The following error occurred")
         raise CustomException(e, sys)

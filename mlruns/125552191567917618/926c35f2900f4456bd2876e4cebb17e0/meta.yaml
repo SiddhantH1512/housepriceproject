@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/siddhant/housepriceproject/mlruns/125552191567917618/926c35f2900f4456bd2876e4cebb17e0/artifacts
+end_time: 1708910080726
+entry_point_name: ''
+experiment_id: '125552191567917618'
+lifecycle_stage: active
+run_id: 926c35f2900f4456bd2876e4cebb17e0
+run_name: agreeable-doe-527
+run_uuid: 926c35f2900f4456bd2876e4cebb17e0
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1708906948016
+status: 3
+tags: []
+user_id: siddhant
