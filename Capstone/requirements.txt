@@ -8,5 +8,4 @@ mlops
 mlflow
 xgboost
 streamlit
-pickle
 boto3

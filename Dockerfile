@@ -22,7 +22,9 @@ COPY Capstone/requirements.txt .
 RUN ls -l
 
 # Install dependencies from requirements.txt
-RUN pip install -r requirements.txt
+
+RUN pip install --upgrade pip && pip install -r requirements.txt
+
 
 # Expose the port that the application listens on.
 EXPOSE 8501
