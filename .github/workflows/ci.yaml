@@ -30,7 +30,7 @@ jobs:
           IMAGE_NAME=realestate-pricing-app
           IMAGE_TAG=latest # or use $(git rev-parse --short HEAD) for commit hash
 
-          # Full image name including registry and repo
+          # Full image name including registry and repository
           FULL_IMAGE_NAME=$IMAGE_NAME:$IMAGE_TAG
           ECR_FULL_IMAGE_NAME=${{ secrets.AWS_ECR_LOGIN_URI }}/$IMAGE_NAME:$IMAGE_TAG
 
