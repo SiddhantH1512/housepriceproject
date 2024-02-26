@@ -13,10 +13,11 @@ RUN mkdir -p /app/models
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the Streamlit app, src directory, and requirements.txt into the container.
+# Copy the Streamlit app, src directory, requirements.txt, and additional pages into the container.
 COPY Capstone/streamlit-app/main_app.py ./
 COPY Capstone/src/ ./src/
 COPY Capstone/requirements.txt .
+COPY Capstone/streamlit-app/pages ./pages   
 
 # List files in /app to verify copying (optional)
 RUN ls -l
@@ -31,6 +32,7 @@ EXPOSE 8501
 
 # Run the Streamlit application.
 CMD ["streamlit", "run", "main_app.py"]
+
 
 
 
