@@ -1,0 +1,140 @@
+schema: '2.0'
+stages:
+  preprocess_flats:
+    cmd: python /Users/siddhant/housepriceproject/Capstone/src/data/data_preprocessing.py
+    deps:
+    - path: Capstone/data/raw/flats.csv
+      hash: md5
+      md5: 1a4e104c204ff38a8849e390d459610d
+      size: 5724903
+    - path: Capstone/src/data/data_preprocessing.py
+      hash: md5
+      md5: 37a392b3b9a94a8f42eee7bbdb9abfd9
+      size: 4306
+    outs:
+    - path: Capstone/pipeline_generated_data/flats_processed.csv
+      hash: md5
+      md5: 70950538760983f4c45edba5d72e267c
+      size: 3354867
+  preprocess_houses:
+    cmd: python /Users/siddhant/housepriceproject/Capstone/src/data/data_preprocessing2.py
+    deps:
+    - path: Capstone/data/raw/house.csv
+      hash: md5
+      md5: d6d68202706925b4b1b633dbbaeac1a8
+      size: 2013628
+    - path: Capstone/src/data/data_preprocessing2.py
+      hash: md5
+      md5: aa97324b84e0a987677c2e9d95d1d77e
+      size: 4437
+    outs:
+    - path: Capstone/pipeline_generated_data/house_processed.csv
+      hash: md5
+      md5: b90d2358ff53c67dbe68df8997ba31eb
+      size: 1378479
+  merge_data:
+    cmd: python /Users/siddhant/housepriceproject/Capstone/src/data/merged_preprocessing.py
+    deps:
+    - path: Capstone/pipeline_generated_data/flats_processed.csv
+      hash: md5
+      md5: 70950538760983f4c45edba5d72e267c
+      size: 3354867
+    - path: Capstone/pipeline_generated_data/house_processed.csv
+      hash: md5
+      md5: b90d2358ff53c67dbe68df8997ba31eb
+      size: 1378479
+    - path: Capstone/src/data/merged_preprocessing.py
+      hash: md5
+      md5: 8469315d9d07a578d6742b4bdb5cd64c
+      size: 1875
+    outs:
+    - path: Capstone/pipeline_generated_data/merged_data.csv
+      hash: md5
+      md5: 524fb773368ef186994949c6c6aa3971
+      size: 4733059
+  preprocess_merged_data:
+    cmd: python /Users/siddhant/housepriceproject/Capstone/src/data/merged_data_preprocessing.py
+    deps:
+    - path: Capstone/pipeline_generated_data/merged_data.csv
+      hash: md5
+      md5: 524fb773368ef186994949c6c6aa3971
+      size: 4733059
+    - path: Capstone/src/data/merged_data_preprocessing.py
+      hash: md5
+      md5: f9f9103f21af887367c6e7afb362c4ce
+      size: 9125
+    outs:
+    - path: Capstone/pipeline_generated_data/merged_processed.csv
+      hash: md5
+      md5: 702f0a1e6106452d85086136f787f150
+      size: 3875339
+  build_features:
+    cmd: python /Users/siddhant/housepriceproject/Capstone/src/features/build_features.py
+    deps:
+    - path: Capstone/pipeline_generated_data/merged_processed.csv
+      hash: md5
+      md5: 702f0a1e6106452d85086136f787f150
+      size: 3875339
+    - path: Capstone/src/features/build_features.py
+      hash: md5
+      md5: 51caa4a7611f36a171186b195fef7b35
+      size: 16542
+    outs:
+    - path: Capstone/pipeline_generated_data/feature_engineered.csv
+      hash: md5
+      md5: 2d9766d16246e1aea02ae1516848e614
+      size: 812927
+  treat_outliers:
+    cmd: python /Users/siddhant/housepriceproject/Capstone/src/features/outliers_treatment.py
+    deps:
+    - path: Capstone/pipeline_generated_data/feature_engineered.csv
+      hash: md5
+      md5: 2d9766d16246e1aea02ae1516848e614
+      size: 812927
+    - path: Capstone/src/features/outliers_treatment.py
+      hash: md5
+      md5: 0b97a1b2c1afd917ec2fc5cfa030f8c6
+      size: 6387
+    outs:
+    - path: Capstone/pipeline_generated_data/outliers_treated.csv
+      hash: md5
+      md5: 82953b41ed63bd0e5c440d045603b217
+      size: 842549
+  impute_missing_values:
+    cmd: python /Users/siddhant/housepriceproject/Capstone/src/features/missing_value_impute.py
+    deps:
+    - path: Capstone/pipeline_generated_data/outliers_treated.csv
+      hash: md5
+      md5: 82953b41ed63bd0e5c440d045603b217
+      size: 842549
+    - path: Capstone/src/features/missing_value_impute.py
+      hash: md5
+      md5: d6d8b6c5e9f26a5a568e61adc11f47f5
+      size: 13200
+    outs:
+    - path: Capstone/pipeline_generated_data/missing_imputed.csv
+      hash: md5
+      md5: c32ced5f3f850a021b54609598bba8cf
+      size: 412075
+  train_model:
+    cmd: python /Users/siddhant/housepriceproject/Capstone/src/models/train_model.py
+    deps:
+    - path: Capstone/pipeline_generated_data/missing_imputed.csv
+      hash: md5
+      md5: c32ced5f3f850a021b54609598bba8cf
+      size: 412075
+    - path: Capstone/src/models/train_model.py
+      hash: md5
+      md5: fde7d8b749cb1788aa418192d91e5467
+      size: 5347
+  push_model_to_s3:
+    cmd: python /Users/siddhant/housepriceproject/Capstone/src/models/push_model.py
+    deps:
+    - path: Capstone/pipeline.pkl
+      hash: md5
+      md5: c170ab9e65c0e944a03efee004c03650
+      size: 99277
+    - path: Capstone/src/models/push_model.py
+      hash: md5
+      md5: 99b8471c3574ca1d0e352629b7acabf3
+      size: 1109
