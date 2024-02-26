@@ -24,36 +24,26 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Build, tag, and push image to Amazon ECR
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build, tag, and push docker image to Amazon ECR
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: latest
         run: |
-          # Define the image name and tag
-          IMAGE_NAME=realestate-pricing-app
-          IMAGE_TAG=latest # or use $(git rev-parse --short HEAD) for commit hash
-
-          # Full image name including registry and repository
-          FULL_IMAGE_NAME=$IMAGE_NAME:$IMAGE_TAG
-          ECR_FULL_IMAGE_NAME=${{ secrets.AWS_ECR_LOGIN_URI }}/$IMAGE_NAME:$IMAGE_TAG
-
-          # Build the Docker image
-          docker build -t $FULL_IMAGE_NAME .
-
-          # Login to Amazon ECR
-          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ECR_LOGIN_URI }}
-
-          # Tag the image to match the ECR repository
-          docker tag $FULL_IMAGE_NAME $ECR_FULL_IMAGE_NAME
-
-          # Push the image to ECR
-          docker push $ECR_FULL_IMAGE_NAME
+          docker build -t $ECR_REGISTRY/${{ secrets.AWS_ECR_REPOSITORY_NAME }}:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/${{ secrets.AWS_ECR_REPOSITORY_NAME }}:$IMAGE_TAG
 
   deploy-to-ec2:
     name: Deploy to EC2
     needs: build-and-push-ecr
-    runs-on: [self-hosted, linux]
+    runs-on: self-hosted
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -62,8 +52,14 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Deploy to EC2
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Pull latest images
         run: |
-          # Replace 'your-ec2-instance-ip' with your actual EC2 instance IP
-          # The following command assumes you have SSH set up to connect to your EC2 instance
-          ssh ec2-user@15.156.87.140 "docker pull ${{ secrets.AWS_ECR_LOGIN_URI }}/${{ secrets.AWS_ECR_REPOSITORY_NAME }}:latest && docker run -d -p 8501:8501 --restart=always ${{ secrets.AWS_ECR_LOGIN_URI }}/${{ secrets.AWS_ECR_REPOSITORY_NAME }}:latest"
+          docker pull ${{ secrets.AWS_ECR_LOGIN_URI }}:latest
+
+      - name: Run Docker Image to serve users
+        run: |
+          docker run -d -p 8501:8501 --ipc="host" --name=real-estate -e 'AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}' -e 'AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}' -e 'AWS_REGION=${{ secrets.AWS_REGION }}'  ${{ secrets.AWS_ECR_LOGIN_URI }}:latest
