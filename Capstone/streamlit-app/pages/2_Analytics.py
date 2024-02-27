@@ -17,14 +17,14 @@ model_path2 = '/app/models/cosinse_sim2.pkl'
 model_path3 = '/app/models/cosinse_sim3.pkl'
 wordcloud = '/app/models/wordcloud_data.pkl'
 df_path = '/app/models/locationdf.pkl'
-image_path = '/app/files/image.pkl'
+image_path = '/app/files/pickled_image.pkl'
 
 s3_path1 = 'models/cosinse_sim.pkl'
 s3_path2 = 'models/cosinse_sim2.pkl'
 s3_path3 = 'models/cosinse_sim3.pkl'
 s3_path_df_4 = 'files/locationdf.pkl'
 s3_path_wordcloud_5 = 'files/wordcloud_data.pkl'
-s3_image = 'files/image.pkl'
+s3_image = 'files/pickled_image.pkl'
 
 
 
@@ -58,7 +58,7 @@ with open(wordcloud, 'rb') as file:
     wordcloud_data = pickle.load(file)
     
 
-st.title("Page 2")
+st.title("Analysis")
 
 # STREAMLIT LAYOUT
 st.header("Sector wise price per sqft map")
@@ -80,7 +80,6 @@ st.plotly_chart(fig, use_container_width=True)
 # STREAMLIT LAYOUT
 st.header("Sector-specific Wordcloud")
 # LOADING THE DATAFRAME
-wordclouddata = pickle.load(open("Capstone/datasets/wordcloud_data.pkl", "rb"))
 # FUNCTION TO PLOT SECTOR WISE WORDCLOUD
 def generate_wordcloud(sector):
     # Extracting features for the selected sector

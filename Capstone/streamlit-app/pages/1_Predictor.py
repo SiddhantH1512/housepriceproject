@@ -51,7 +51,7 @@ if check_file_content(df_path):
 
 if pipeline is not None and df is not None:
     # Your code here
-    st.title("Page 1")
+    st.title("Enter your requirements to get a quote")
 
 
     st.header("Enter your input")
