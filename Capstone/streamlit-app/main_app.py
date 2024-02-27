@@ -1,6 +1,37 @@
 import streamlit as st
 import base64
+import boto3
+import sys
+import pickle
+sys.path.append("/Users/siddhant/housepriceproject")
+from Capstone.logger import logging
+from botocore.exceptions import NoCredentialsError
 
+image_path = '/app/files/image.pkl'
+s3_image = 'files/image.pkl'
+
+
+
+bucket_name = "capstone-houseprice-prediction"
+
+def s3_download(s3_bucket, s3_file_path, local_file):
+    s3 = boto3.client("s3")
+    try:
+        logging.info(f"Downloading file {local_file} residing in S3 bucket {s3_bucket} at {s3_file_path}")
+        s3.download_file(s3_bucket, s3_file_path, local_file)
+        logging.info(f"Downloaded file {local_file} residing in S3 bucket {s3_bucket} at {s3_file_path}")
+    except FileNotFoundError:
+        logging.exception(f"The file {local_file} was not found.")
+    except NoCredentialsError:
+        logging.exception("Credentials not available.")
+    except Exception as e:
+        logging.exception(f"An error occurred while downloading {local_file}: {e}")
+
+
+s3_download(bucket_name, s3_image, image_path)
+
+with open(image_path, 'rb') as file:
+    image = pickle.load(file)
 # Set page configuration
 st.set_page_config(page_title="Welcome to the World of Homes", layout="wide")
 
@@ -37,7 +68,7 @@ def add_bg_from_local(image_file):
 
 
 # Apply the background image from a local file
-add_bg_from_local("/Users/siddhant/housepriceproject/Capstone/datasets/image.jpeg")  # Adjust the path to the image
+add_bg_from_local(image)  # Adjust the path to the image
 
 # # Sidebar for navigation
 # st.sidebar.title("Navigation")
