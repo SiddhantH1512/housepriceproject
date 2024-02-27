@@ -1,23 +1,75 @@
 import streamlit as st 
 import pandas as pd 
-import numpy as np 
+import plotly.express as px
+import matplotlib.pyplot as plt 
+from wordcloud import WordCloud
 import pickle
+import ast
+import numpy as np 
+import boto3
+import sys
+sys.path.append("/Users/siddhant/housepriceproject")
+from Capstone.logger import logging
+from botocore.exceptions import NoCredentialsError
 
-st.set_page_config(page_title="Recommend Apartments", layout="wide", page_icon="🏠")
 
-# IMPORTING DATA
-dataframe = pickle.load(open("/Users/siddhant/housepriceproject/Capstone/datasets/locationdf.pkl", "rb"))
-cosine_sim1 = pickle.load(open("/Users/siddhant/housepriceproject/Capstone/datasets/cosinse_sim.pkl", "rb"))
-cosine_sim2 = pickle.load(open("/Users/siddhant/housepriceproject/Capstone/datasets/cosinse_sim2.pkl", "rb"))
-cosine_sim3 = pickle.load(open("/Users/siddhant/housepriceproject/Capstone/datasets/cosinse_sim3.pkl", "rb"))
+model_path1 = '/app/models/cosinse_sim.pkl'
+model_path2 = '/app/models/cosinse_sim2.pkl'
+model_path3 = '/app/models/cosinse_sim3.pkl'
+wordcloud = '/app/models/wordcloud_data.pkl'
+df_path = '/app/models/locationdf.pkl'
+
+s3_path1 = 'models/cosinse_sim.pkl'
+s3_path2 = 'models/cosinse_sim2.pkl'
+s3_path3 = 'models/cosinse_sim3.pkl'
+s3_path_df_4 = 'files/locationdf.pkl'
+s3_path_wordcloud_5 = 'files/wordcloud_data.pkl'
+
+
+
+bucket_name = "capstone-houseprice-prediction"
+
+def s3_download(s3_bucket, s3_file_path, local_file):
+    s3 = boto3.client("s3")
+    try:
+        logging.info(f"Downloading file {local_file} residing in S3 bucket {s3_bucket} at {s3_file_path}")
+        s3.download_file(s3_bucket, s3_file_path, local_file)
+        logging.info(f"Downloaded file {local_file} residing in S3 bucket {s3_bucket} at {s3_file_path}")
+    except FileNotFoundError:
+        logging.exception(f"The file {local_file} was not found.")
+    except NoCredentialsError:
+        logging.exception("Credentials not available.")
+    except Exception as e:
+        logging.exception(f"An error occurred while downloading {local_file}: {e}")
+
+# Upload each file
+s3_download(bucket_name, s3_path1, model_path1)
+s3_download(bucket_name, s3_path2, model_path2)
+s3_download(bucket_name, s3_path2, model_path3)
+s3_download(bucket_name, s3_path_df_4, df_path)
+
+
+
+with open(model_path1, 'rb') as file:
+    cosine_sim1 = pickle.load(file)
+
+with open(model_path2, 'rb') as file:
+    cosine_sim2 = pickle.load(file)
+    
+with open(model_path3, 'rb') as file:
+    cosine_sim3 = pickle.load(file)
+    
+with open(df_path, 'rb') as file:
+    locationdf = pickle.load(file)
+    
 
 # DROP DOWN FOR LOCATIONS
 st.title("Select a location and radius")
-location = st.selectbox("Locations", sorted(dataframe.columns.tolist()))
+location = st.selectbox("Locations", sorted(locationdf.columns.tolist()))
 radius = st.number_input("Radius (kms)")
 
 if st.button("Search"):
-    result = dataframe[dataframe[location] < radius*1000][location].sort_values()
+    result = locationdf[locationdf[location] < radius*1000][location].sort_values()
 
     if result.empty:  # Check if the Series is empty
         st.write(f"No properties found within {radius} kms.")
@@ -33,12 +85,12 @@ if st.button("Search"):
 def recommend_properties_with_scores2(property_name, top_n=5):
     cosine_sim_matrix = 2*cosine_sim1 + 4*cosine_sim2 + 1*cosine_sim3
 
-    property_idx = dataframe.index.get_loc(property_name)
+    property_idx = locationdf.index.get_loc(property_name)
     scores = list(enumerate(cosine_sim_matrix[property_idx]))
     sorted_scores = sorted(scores, key=lambda x: x[1], reverse=True)
     top_indices = [i[0] for i in sorted_scores[1:top_n + 1]]
     top_scores = [i[1] for i in sorted_scores[1:top_n + 1]]
-    top_properties = dataframe.index[top_indices].tolist()
+    top_properties = locationdf.index[top_indices].tolist()
 
     new_recommendations_df = pd.DataFrame({
         'PropertyName': top_properties,
@@ -49,7 +101,7 @@ def recommend_properties_with_scores2(property_name, top_n=5):
 
 # DROP DOWN FOR APARTMENTS
 st.title("Select an apartment")
-apartment = st.selectbox("Apartments", sorted(dataframe.index.tolist()))
+apartment = st.selectbox("Apartments", sorted(locationdf.index.tolist()))
 
 if st.button("Recommend"):
     recommendation_df = recommend_properties_with_scores2(apartment)

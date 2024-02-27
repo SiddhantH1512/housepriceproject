@@ -6,8 +6,64 @@ from wordcloud import WordCloud
 import pickle
 import ast
 import numpy as np 
+import boto3
+import sys
+sys.path.append("/Users/siddhant/housepriceproject")
+from Capstone.logger import logging
+from botocore.exceptions import NoCredentialsError
+
+model_path1 = '/app/models/cosinse_sim.pkl'
+model_path2 = '/app/models/cosinse_sim2.pkl'
+model_path3 = '/app/models/cosinse_sim3.pkl'
+wordcloud = '/app/models/wordcloud_data.pkl'
+df_path = '/app/models/locationdf.pkl'
+
+s3_path1 = 'models/cosinse_sim.pkl'
+s3_path2 = 'models/cosinse_sim2.pkl'
+s3_path3 = 'models/cosinse_sim3.pkl'
+s3_path_df_4 = 'files/locationdf.pkl'
+s3_path_wordcloud_5 = 'files/wordcloud_data.pkl'
 
 
+
+bucket_name = "capstone-houseprice-prediction"
+
+def s3_download(s3_bucket, s3_file_path, local_file):
+    s3 = boto3.client("s3")
+    try:
+        logging.info(f"Downloading file {local_file} residing in S3 bucket {s3_bucket} at {s3_file_path}")
+        s3.download_file(s3_bucket, s3_file_path, local_file)
+        logging.info(f"Downloaded file {local_file} residing in S3 bucket {s3_bucket} at {s3_file_path}")
+    except FileNotFoundError:
+        logging.exception(f"The file {local_file} was not found.")
+    except NoCredentialsError:
+        logging.exception("Credentials not available.")
+    except Exception as e:
+        logging.exception(f"An error occurred while downloading {local_file}: {e}")
+
+# Upload each file
+s3_download(bucket_name, s3_path1, model_path1)
+s3_download(bucket_name, s3_path2, model_path2)
+s3_download(bucket_name, s3_path3, model_path3)
+s3_download(bucket_name, s3_path_df_4, df_path)
+s3_download(bucket_name, s3_path_wordcloud_5, wordcloud)
+
+
+with open(model_path1, 'rb') as file:
+    cosine_sim1 = pickle.load(file)
+
+with open(model_path2, 'rb') as file:
+    cosine_sim2 = pickle.load(file)
+    
+with open(model_path3, 'rb') as file:
+    cosine_sim3 = pickle.load(file)
+    
+with open(df_path, 'rb') as file:
+    locationdf = pickle.load(file)
+    
+with open(wordcloud, 'rb') as file:
+    wordcloud_data = pickle.load(file)
+    
 
 st.title("Page 2")
 
@@ -35,7 +91,7 @@ wordclouddata = pickle.load(open("Capstone/datasets/wordcloud_data.pkl", "rb"))
 # FUNCTION TO PLOT SECTOR WISE WORDCLOUD
 def generate_wordcloud(sector):
     # Extracting features for the selected sector
-    features = wordclouddata[wordclouddata['sector'] == sector]['features']
+    features = wordcloud_data[wordcloud_data['sector'] == sector]['features']
     main = []
     for feature_list in features.dropna():
         main.extend(ast.literal_eval(feature_list))
@@ -55,7 +111,7 @@ def generate_wordcloud(sector):
     st.pyplot()
 
 # Dropdown for sector selection
-selected_sector = st.selectbox("Select a sector", wordclouddata['sector'].unique())
+selected_sector = st.selectbox("Select a sector", wordcloud_data['sector'].unique())
 # Display the wordcloud for the selected sector
 if selected_sector:
     generate_wordcloud(selected_sector)

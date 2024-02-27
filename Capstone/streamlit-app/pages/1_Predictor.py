@@ -5,6 +5,7 @@ import pickle
 import boto3
 import os
 
+
 def download_file_from_s3(bucket_name, s3_key, local_path):
     if not os.path.exists(local_path):
         s3 = boto3.client('s3')
