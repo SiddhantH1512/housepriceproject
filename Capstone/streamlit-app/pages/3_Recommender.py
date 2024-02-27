@@ -8,7 +8,7 @@ import numpy as np
 import boto3
 import sys
 sys.path.append("/Users/siddhant/housepriceproject")
-from Capstone.logger import logging
+
 from botocore.exceptions import NoCredentialsError
 
 
@@ -30,16 +30,8 @@ bucket_name = "capstone-houseprice-prediction"
 
 def s3_download(s3_bucket, s3_file_path, local_file):
     s3 = boto3.client("s3")
-    try:
-        logging.info(f"Downloading file {local_file} residing in S3 bucket {s3_bucket} at {s3_file_path}")
-        s3.download_file(s3_bucket, s3_file_path, local_file)
-        logging.info(f"Downloaded file {local_file} residing in S3 bucket {s3_bucket} at {s3_file_path}")
-    except FileNotFoundError:
-        logging.exception(f"The file {local_file} was not found.")
-    except NoCredentialsError:
-        logging.exception("Credentials not available.")
-    except Exception as e:
-        logging.exception(f"An error occurred while downloading {local_file}: {e}")
+    s3.download_file(s3_bucket, s3_file_path, local_file)
+
 
 # Upload each file
 s3_download(bucket_name, s3_path1, model_path1)

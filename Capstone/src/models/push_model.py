@@ -29,9 +29,9 @@ def upload_to_s3(file_paths, bucket_name, s3_model_paths):
             logging.exception(f"An error occurred while uploading {local_file}: {e}")
 
 local_model_path = '/Users/siddhant/housepriceproject/Capstone/pipeline.pkl'
-local_df_path = '/Users/siddhant/housepriceproject/Capstone/df.pkl'
+local_df_path = '/Users/siddhant/housepriceproject/Capstone/df2.pkl'
 s3_bucket_name = 'capstone-houseprice-prediction'
 s3_model_path = 'models/pipeline.pkl'
-s3_df_path = 'models/df.pkl'
+s3_df_path = 'models/df2.pkl'
 
 upload_to_s3([local_model_path, local_df_path], s3_bucket_name, [s3_model_path, s3_df_path])

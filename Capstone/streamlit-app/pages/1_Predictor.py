@@ -24,7 +24,7 @@ def download_file_from_s3(bucket_name, s3_key, local_path):
         print(f"Failed to download {s3_key} from bucket {bucket_name} to {local_path}. Error: {e}")
 
 model_path = '/app/models/pipeline.pkl'
-df_path = '/app/models/df.pkl'
+df_path = '/app/models/df2.pkl'
 
 
 download_file_from_s3('capstone-houseprice-prediction', 'models/pipeline.pkl', model_path)
@@ -50,14 +50,7 @@ if check_file_content(df_path):
         st.error(f"Failed to load dataframe: {e}")
 
 if pipeline and df:
-    # Streamlit UI components and prediction logic here...
-
-
-    with open(model_path, 'rb') as file:
-        pipeline = pickle.load(file) 
-
-    with open(df_path, 'rb') as file:
-        df = pickle.load(file) 
+    
 
     st.title("Page 1")
 

@@ -9,6 +9,7 @@ ENV PYTHONUNBUFFERED=1
 
 # Create a directory for the model.
 RUN mkdir -p /app/models
+RUN mkdir -p /app/files
 
 # Set the working directory in the container
 WORKDIR /app
