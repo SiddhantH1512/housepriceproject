@@ -5,9 +5,9 @@ import pickle
 import base64
 import os
 
-# Ensure your AWS credentials are set in your environment or in ~/.aws/credentials
+st.set_page_config(page_title="Welcome to the World of Homes", layout="wide")
 
-local_image_path = '/app/files/pickled_image.pkl'  # Path inside Docker
+local_image_path = '/app/files/pickled_image.pkl'  
 
 def s3_download(s3_bucket, s3_file_key, local_file_path):
     try:
@@ -61,10 +61,9 @@ def add_bg_from_local(image_file):
     '''
     st.markdown(page_bg_img, unsafe_allow_html=True)
 
-add_bg_from_local(local_image_path)  # Adjust the path to the image
+add_bg_from_local(local_image_path)  
 
-# Additional Streamlit app content
-st.set_page_config(page_title="Welcome to the World of Homes", layout="wide")
+
 st.markdown("""
 <div>
     <h1>Welcome to the World of Homes</h1>

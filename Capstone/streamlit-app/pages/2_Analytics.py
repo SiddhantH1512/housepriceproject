@@ -58,7 +58,7 @@ with open(wordcloud, 'rb') as file:
     wordcloud_data = pickle.load(file)
     
 
-st.title("Analysis")
+st.title("Analysis 📈")
 
 # STREAMLIT LAYOUT
 st.header("Sector wise price per sqft map")

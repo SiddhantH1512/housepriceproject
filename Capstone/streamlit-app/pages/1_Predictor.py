@@ -51,10 +51,10 @@ if check_file_content(df_path):
 
 if pipeline is not None and df is not None:
     # Your code here
-    st.title("Enter your requirements to get a quote")
+    st.title("Price Estimate 💸")
 
 
-    st.header("Enter your input")
+    st.header("Enter your inputs to get a quote")
 
     # TYPE OF PROPERTY
     property_type =  st.selectbox('Property Type', df["property_type"].unique().tolist())

@@ -55,7 +55,7 @@ with open(df_path, 'rb') as file:
     
 
 # DROP DOWN FOR LOCATIONS
-st.title("Select a location and radius")
+st.title("Select a location and radius 📍")
 location = st.selectbox("Locations", sorted(locationdf.columns.tolist()))
 radius = st.number_input("Radius (kms)")
 
@@ -91,7 +91,7 @@ def recommend_properties_with_scores2(property_name, top_n=5):
     return new_recommendations_df
 
 # DROP DOWN FOR APARTMENTS
-st.title("Select an apartment")
+st.title("Select an apartment 🏠")
 apartment = st.selectbox("Apartments", sorted(locationdf.index.tolist()))
 
 if st.button("Recommend"):
