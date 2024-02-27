@@ -3,6 +3,11 @@ import sys
 sys.path.append("/Users/siddhant/housepriceproject")
 from Capstone.logger import logging
 from botocore.exceptions import NoCredentialsError
+import pickle
+
+image = '/Users/siddhant/housepriceproject/Capstone/datasets/image.jpeg'
+with open('/Users/siddhant/housepriceproject/Capstone/datasets/image.pkl', 'wb') as f:
+    pickle.dump(image, f)
 
 
 file_paths = {
@@ -10,7 +15,8 @@ file_paths = {
     "/Users/siddhant/housepriceproject/Capstone/datasets/cosinse_sim2.pkl": "models/cosinse_sim2.pkl",
     "/Users/siddhant/housepriceproject/Capstone/datasets/cosinse_sim3.pkl": "models/cosinse_sim3.pkl",
     "/Users/siddhant/housepriceproject/Capstone/datasets/locationdf.pkl": "files/locationdf.pkl",
-    "/Users/siddhant/housepriceproject/Capstone/datasets/wordcloud_data.pkl": "files/wordcloud_data.pkl"
+    "/Users/siddhant/housepriceproject/Capstone/datasets/wordcloud_data.pkl": "files/wordcloud_data.pkl",
+    '/Users/siddhant/housepriceproject/Capstone/datasets/image.pkl': 'files/image.pkl'
 }
 
 bucket_name = "capstone-houseprice-prediction"

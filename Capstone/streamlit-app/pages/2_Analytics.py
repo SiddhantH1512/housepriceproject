@@ -17,12 +17,14 @@ model_path2 = '/app/models/cosinse_sim2.pkl'
 model_path3 = '/app/models/cosinse_sim3.pkl'
 wordcloud = '/app/models/wordcloud_data.pkl'
 df_path = '/app/models/locationdf.pkl'
+image_path = '/app/files/image.pkl'
 
 s3_path1 = 'models/cosinse_sim.pkl'
 s3_path2 = 'models/cosinse_sim2.pkl'
 s3_path3 = 'models/cosinse_sim3.pkl'
 s3_path_df_4 = 'files/locationdf.pkl'
 s3_path_wordcloud_5 = 'files/wordcloud_data.pkl'
+s3_image = 'files/image.pkl'
 
 
 
@@ -47,7 +49,7 @@ s3_download(bucket_name, s3_path2, model_path2)
 s3_download(bucket_name, s3_path3, model_path3)
 s3_download(bucket_name, s3_path_df_4, df_path)
 s3_download(bucket_name, s3_path_wordcloud_5, wordcloud)
-
+s3_download(bucket_name, s3_image, image_path)
 
 with open(model_path1, 'rb') as file:
     cosine_sim1 = pickle.load(file)

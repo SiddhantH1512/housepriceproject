@@ -9,3 +9,5 @@ mlflow
 xgboost
 streamlit
 boto3
+category_encoders
+plotly
