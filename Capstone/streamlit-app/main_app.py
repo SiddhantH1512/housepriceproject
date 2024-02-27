@@ -97,7 +97,9 @@ def s3_download(s3_bucket, s3_file_key, local_file_path):
 def load_and_display_image(image_path):
     with open(image_path, "rb") as file:
         image_data = pickle.load(file)
+        print(f"Type of loaded data: {type(image_data)}")  # Debugging line
         st.image(image_data, caption="Loaded Image", use_column_width=True)
+
 
 # Example usage
 s3_bucket_name = "capstone-houseprice-prediction"

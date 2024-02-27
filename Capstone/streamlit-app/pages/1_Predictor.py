@@ -49,9 +49,8 @@ if check_file_content(df_path):
     except Exception as e:
         st.error(f"Failed to load dataframe: {e}")
 
-if pipeline and df:
-    
-
+if pipeline is not None and df is not None:
+    # Your code here
     st.title("Page 1")
 
 
