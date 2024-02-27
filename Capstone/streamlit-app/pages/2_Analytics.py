@@ -64,7 +64,7 @@ st.title("Page 2")
 st.header("Sector wise price per sqft map")
 
 # PREPARING DATA FOR GEOMAP
-new_df = pd.read_csv("/Users/siddhant/housepriceproject/Capstone/datasets/data_viz1.csv")
+new_df = pd.read_csv("/app/src/data_viz1.csv")
 groupdf = new_df.groupby("sector")[['price','price_per_sqft','built_up_area','latitude','longitude']].mean()
 
 # GEOMAP

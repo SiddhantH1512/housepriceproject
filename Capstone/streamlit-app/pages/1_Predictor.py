@@ -28,7 +28,7 @@ df_path = '/app/models/df2.pkl'
 
 
 download_file_from_s3('capstone-houseprice-prediction', 'models/pipeline.pkl', model_path)
-download_file_from_s3('capstone-houseprice-prediction', 'models/df.pkl', df_path)
+download_file_from_s3('capstone-houseprice-prediction', 'models/df2.pkl', df_path)
 
 pipeline = None
 df = None
